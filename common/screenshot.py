@@ -37,6 +37,7 @@ def pull_screenshot(img_path):
         screenshot_name = "screenshot.png"
         os.system('adb shell screencap -p /sdcard/{}'.format(screenshot_name))
         os.system('adb pull /sdcard/{} {}'.format(screenshot_name, img_path))
+        os.system("adb shell rm /sdcard/screenshot.png")
 
 
 def check_screenshot(img_path):

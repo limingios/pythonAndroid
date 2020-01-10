@@ -9,6 +9,11 @@ import os
 import time
 from PIL import Image
 import traceback
+import cv2
+import numpy as np
+from skimage.io import imread
+from skimage.metrics import structural_similarity as ssim
+from skimage.transform import resize
 
 try:
     from common import debug, config, screenshot, colormatch
@@ -140,6 +145,28 @@ def send_event(idx, type, key, value):
 def adb_shell(cmd):
     print(cmd)
     os.system(cmd)
+
+def getTargetCoordinate(target_pic):
+
+
+    img_rgb = cv2.imread("./shot.jpg")
+    img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
+    template = cv2.imread(target_pic, 0)
+    w, h = template.shape[::-1]
+    res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
+    allxy = []
+    threshold = 0.8
+    print('图片{0}相似度{1}'.format(target_pic,res))
+    loc = np.where(res >= threshold)
+    for pt in zip(*loc[::-1]):
+        allxy.append(pt)
+        # cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 1)
+    st_data = sorted(allxy, key=lambda x: x[0], reverse=False)
+    print('st_data:%s' %st_data)
+    if len(st_data) < 1:
+        return -1
+    print(st_data[0])
+    return [st_data[0][0] + w/2, st_data[0][1] + h/2]
 
 
 def init():
