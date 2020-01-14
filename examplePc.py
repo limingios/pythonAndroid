@@ -84,7 +84,7 @@ def main():
     key_input("126.com");
     win32api.keybd_event(VK_CODE['enter'], 0, 0, 0)
     time.sleep(0.5);
-    key_input("13949426995qwe");
+    key_input("123456");
     win32api.keybd_event(VK_CODE['enter'], 0, 0, 0)
 
     time.sleep(10);
