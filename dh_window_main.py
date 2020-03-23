@@ -19,7 +19,7 @@ import math
 
 import win32gui
 import sys
-from pyqt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import *
 import auto_bot
 from common.keyapi import VK_CODE
@@ -52,7 +52,7 @@ def mouse_click(x, y):
 def main():
     titles = set()
     auto_bot.init()
-    hwnd = win32gui.FindWindow(0,"大话西游2经典版",)
+    hwnd = win32gui.FindWindow(0,"大话西游手游",)
     print(hwnd)
     win32gui.MoveWindow(hwnd, 20, 20, 805, 756, True)
     win32gui.SetForegroundWindow(hwnd)
